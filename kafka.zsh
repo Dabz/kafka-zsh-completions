@@ -1,4 +1,10 @@
 #!/bin/sh
+#
+# DISCLAIMER: THIS FILE HAS BEEN AUTOMATICALLY GENERATED
+# PLEASE DO NOT TOUCH!!!
+# IF YOU NEED TO DO ANY MODIFICATION, EDIT GENERATE.ZSH
+# FOR MORE INFORMATION https://github.com/Dabz/kafka-zsh-completions
+#
 
 function _kafka-command() {
 	cmd=$1
@@ -205,7 +211,7 @@ kafka_consumer_perf_test_args+=('--consumer.config: <String: config file> Consum
 kafka_consumer_perf_test_args+=('--date-format: <String: date format> The date format to use for formatting the time field. See java.text. SimpleDateFormat for options. (default: yyyy-MM-dd HH:mm:ss:SSS)')
 kafka_consumer_perf_test_args+=('--fetch-size: <Integer: size> The amount of data to fetch in a single request. (default: 1048576)')
 kafka_consumer_perf_test_args+=('--from-latest: If the consumer does not already have an established offset to consume from, start with the latest message present in the log rather than the earliest message.')
-kafka_consumer_perf_test_args+=('--group: <String: gid> The group id to consume on. (default: perf-consumer-75412)')
+kafka_consumer_perf_test_args+=('--group: <String: gid> The group id to consume on. (default: perf-consumer-20667)')
 kafka_consumer_perf_test_args+=('--help: Print usage.')
 kafka_consumer_perf_test_args+=('--hide-header: If set, skips printing the header for the stats')
 kafka_consumer_perf_test_args+=('--messages: <Long: count> REQUIRED: The number of messages to send or consume')

@@ -42,6 +42,12 @@ function kafka-command() {
 
 cat << EOF > $OUT
 #!/bin/sh
+#
+# DISCLAIMER: THIS FILE HAS BEEN AUTOMATICALLY GENERATED
+# PLEASE DO NOT TOUCH!!!
+# IF YOU NEED TO DO ANY MODIFICATION, EDIT GENERATE.ZSH
+# FOR MORE INFORMATION https://github.com/Dabz/kafka-zsh-completions
+#
 
 function _kafka-command() {
 	cmd=\$1

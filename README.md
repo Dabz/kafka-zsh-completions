@@ -5,6 +5,20 @@ This projects aims at developing Kafka completion scripts. The scripts may be co
 
 To start using the Kafka autocompletion just download the repository locally and `source kafka.zsh` 
 
+## Supported completion
+
+- kafka-topics
+- kafka-acls 
+- kafka-configs 
+- kafka-avro-console-consumer
+- kafka-avro-console-producer
+- kafka-broker-api-versions 
+- kafka-console-consumer 
+- kafka-console-producer 
+- kafka-consumer-groups 
+- kafka-consumer-perf-test 
+- kafka-delegation-tokens 
+
 ## Notes
 
 - The source of information used for the completion is gathered from the usage of the CLI tool. 

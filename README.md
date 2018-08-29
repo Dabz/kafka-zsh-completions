@@ -8,16 +8,25 @@ To start using the Kafka autocompletion just download the repository locally and
 ## Supported completion
 
 - kafka-topics
-- kafka-acls 
-- kafka-configs 
+- kafka-acls
+- kafka-configs
+- kafka-console-producer
+- kafka-console-consumer
+- kafka-consumer-perf-test
+- kafka-producer-perf-test
 - kafka-avro-console-consumer
 - kafka-avro-console-producer
-- kafka-broker-api-versions 
-- kafka-console-consumer 
-- kafka-console-producer 
-- kafka-consumer-groups 
-- kafka-consumer-perf-test 
-- kafka-delegation-tokens 
+- kafka-broker-api-versions
+- kafka-consumer-groups
+- kafka-delegation-tokens
+- kafka-dump-log
+- kafka-log-dirs
+- kafka-verifiable-consumer
+- kafka-verifiable-producer
+- kafka-streams-application-reset
+- kafka-mirror-maker
+- kafka-delete-records
+- replicator
 
 ## Notes
 
@@ -27,4 +36,4 @@ To start using the Kafka autocompletion just download the repository locally and
 
 ## Examples
 
-[![asciicast](https://asciinema.org/a/uEjgB2jcnLBeHMZXHAcyya2wH.png)](https://asciinema.org/a/uEjgB2jcnLBeHMZXHAcyya2wH)
+[![asciicast](https://asciinema.org/a/TenI5dsznpLp8XM4HTsjiJYGA.png)](https://asciinema.org/a/TenI5dsznpLp8XM4HTsjiJYGA)

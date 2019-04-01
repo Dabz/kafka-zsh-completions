@@ -14,7 +14,7 @@ function kafka_retrieve_help_command() {
 	cmd=$1
 	option=""
 	desc=""
-	help_output=`$cmd 2>&1`
+	help_output=`$cmd --help 2>&1`
 	arg_name="_$(echo $cmd | tr - _)_args"
 	start_desc_column=`echo $help_output | grep Description | head -n 1`
 

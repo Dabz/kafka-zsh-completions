@@ -36,9 +36,10 @@ _kafka_acls_args+=('--operation: Operation that is being allowed or denied. Vali
 _kafka_acls_args+=('--principal: List ACLs for the specified principal. principal is in principalType:name format. Note that principalType must be supported by the Authorizer being used. Multiple --principal option can be passed.')
 _kafka_acls_args+=('--producer: Convenience option to add/remove ACLs for producer role. This will generate ACLs that allows WRITE, DESCRIBE and CREATE on topic.')
 _kafka_acls_args+=('--remove: Indicates you are trying to remove ACLs.')
-_kafka_acls_args+=('--resource-pattern-type: The type of the resource pattern or pattern filter. When adding acls, this should be a specific pattern type, e.g. ''literal'' or ''prefixed''. When listing or removing acls, a specific pattern type can be used to list or remove acls from specific resource patterns, or use the filter values of ''any'' or ''match'', where ''any'' will match any pattern type, but will match the resource name exactly, where as ''match'' will perform pattern matching to list or remove all acls that affect the supplied resource(s). WARNING: ''match'', when used in combination with the ''--remove'' switch, should be used with care. (default: LITERAL)')
+_kafka_acls_args+=('--resource-pattern-type: The type of the resource pattern or ALL_TENANT_LITERAL|CONFLUENT_ALL_TENANT_PREFIXED|CONFLUENT_ALL_TENANT_ANY|CONFLUENT_ONLY_TENANT_MATCH> pattern filter. When adding acls, this should be a specific pattern type, e.g. ''literal'' or ''prefixed''. When listing or removing acls, a specific pattern type can be used to list or remove acls from specific resource patterns, or use the filter values of ''any'' or ''match'', where ''any'' will match any pattern type, but will match the resource name exactly, where as ''match'' will perform pattern matching to list or remove all acls that affect the supplied resource(s). WARNING: ''match'', when used in combination with the ''--remove'' switch, should be used with care. (default: LITERAL)')
 _kafka_acls_args+=('--topic: topic to which ACLs should be added or removed. A value of * indicates ACL should apply to all topics.')
 _kafka_acls_args+=('--transactional-id: The transactionalId to which ACLs should be added or removed. A value of * indicates the ACLs should apply to all transactionalIds.')
+_kafka_acls_args+=('--version: Display Kafka version.')
 compdef "_kafka-command kafka-acls" kafka-acls
 declare -a _kafka_avro_console_consumer_args
 _kafka_avro_console_consumer_args=()
@@ -60,6 +61,7 @@ _kafka_avro_console_consumer_args+=('--skip-message-on-error: If there is an err
 _kafka_avro_console_consumer_args+=('--timeout-ms: If specified, exit if no message is available for consumption for the specified interval.')
 _kafka_avro_console_consumer_args+=('--topic: The topic id to consume on.')
 _kafka_avro_console_consumer_args+=('--value-deserializer:')
+_kafka_avro_console_consumer_args+=('--version: Display Kafka version.')
 _kafka_avro_console_consumer_args+=('--whitelist: Regular expression specifying whitelist of topics to include for consumption.')
 compdef "_kafka-command kafka-avro-console-consumer" kafka-avro-console-consumer
 declare -a _kafka_avro_console_producer_args
@@ -84,16 +86,18 @@ _kafka_avro_console_producer_args+=('--socket-buffer-size: The size of the tcp R
 _kafka_avro_console_producer_args+=('--sync: If set message send requests to the brokers are synchronously, one at a time as they arrive.')
 _kafka_avro_console_producer_args+=('--timeout: If set and the producer is running in asynchronous mode, this gives the maximum amount of time a message will queue awaiting sufficient batch size. The value is given in ms. (default: 1000)')
 _kafka_avro_console_producer_args+=('--topic: REQUIRED: The topic id to produce messages to.')
+_kafka_avro_console_producer_args+=('--version: Display Kafka version.')
 compdef "_kafka-command kafka-avro-console-producer" kafka-avro-console-producer
 declare -a _kafka_broker_api_versions_args
 _kafka_broker_api_versions_args=()
 _kafka_broker_api_versions_args+=('--bootstrap-server: REQUIRED: The server to connect to.')
 _kafka_broker_api_versions_args+=('--command-config: A property file containing configs to be passed to Admin Client.')
 _kafka_broker_api_versions_args+=('--help: Print usage information.')
+_kafka_broker_api_versions_args+=('--version: Display Kafka version.')
 compdef "_kafka-command kafka-broker-api-versions" kafka-broker-api-versions
 declare -a _kafka_configs_args
 _kafka_configs_args=()
-_kafka_configs_args+=('--add-config: Key Value pairs of configs to add. Square brackets can be used to group values which contain commas: ''k1=v1, k2=[v1,v2,v2],k3=v3''. The following is a list of valid configurations: For entity-type ''topics'': cleanup.policy compression.type delete.retention.ms file.delete.delay.ms flush.messages flush.ms follower.replication.throttled. replicas index.interval.bytes leader.replication.throttled.replicas max.message.bytes message.downconversion.enable message.format.version message.timestamp.difference.max.ms message.timestamp.type min.cleanable.dirty.ratio min.compaction.lag.ms min.insync.replicas preallocate retention.bytes retention.ms segment.bytes segment.index.bytes segment.jitter.ms segment.ms unclean.leader.election.enable For entity-type ''brokers'': log.message.timestamp.type ssl.client.auth log.retention.ms sasl.login.refresh.window.jitter sasl.kerberos.ticket.renew.window. factor log.preallocate log.index.size.max.bytes sasl.login.refresh.window.factor ssl.truststore.type ssl.keymanager.algorithm log.cleaner.io.buffer.load.factor sasl.login.refresh.min.period.seconds ssl.key.password background.threads log.retention.bytes ssl.trustmanager.algorithm log.segment.bytes max.connections.per.ip.overrides log.cleaner.delete.retention.ms log.segment.delete.delay.ms min.insync.replicas ssl.keystore.location ssl.cipher.suites log.roll.jitter.ms log.cleaner.backoff.ms sasl.jaas.config principal.builder.class log.flush.interval.ms log.cleaner.dedupe.buffer.size log.flush.interval.messages advertised.listeners num.io.threads listener.security.protocol.map log.message.downconversion.enable sasl.enabled.mechanisms sasl.login.refresh.buffer.seconds ssl.truststore.password listeners metric.reporters ssl.protocol sasl.kerberos.ticket.renew.jitter ssl.keystore.password sasl.mechanism.inter.broker.protocol log.cleanup.policy sasl.kerberos.principal.to.local.rules sasl.kerberos.min.time.before.relogin num.recovery.threads.per.data.dir log.cleaner.io.max.bytes.per.second log.roll.ms ssl.endpoint.identification.algorithm unclean.leader.election.enable message.max.bytes log.cleaner.threads log.cleaner.io.buffer.size max.connections.per.ip sasl.kerberos.service.name ssl.provider follower.replication.throttled.rate log.index.interval.bytes log.cleaner.min.compaction.lag.ms log.message.timestamp.difference.max. ms ssl.enabled.protocols log.cleaner.min.cleanable.ratio replica.alter.log.dirs.io.max.bytes. per.second ssl.keystore.type ssl.secure.random.implementation ssl.truststore.location sasl.kerberos.kinit.cmd leader.replication.throttled.rate num.network.threads compression.type num.replica.fetchers For entity-type ''users'': request_percentage producer_byte_rate SCRAM-SHA-256 SCRAM-SHA-512 consumer_byte_rate For entity-type ''clients'': request_percentage producer_byte_rate consumer_byte_rate Entity types ''users'' and ''clients'' may be specified together to update config for clients of a specific user.')
+_kafka_configs_args+=('--add-config: Key Value pairs of configs to add. Square brackets can be used to group values which contain commas: ''k1=v1, k2=[v1,v2,v2],k3=v3''. The following is a list of valid configurations: For entity-type ''topics'': cleanup.policy compression.type confluent.tier.enable confluent.tier.local.hotset.bytes confluent.tier.local.hotset.ms delete.retention.ms file.delete.delay.ms flush.messages flush.ms follower.replication.throttled. replicas index.interval.bytes leader.replication.throttled.replicas max.compaction.lag.ms max.message.bytes message.downconversion.enable message.format.version message.timestamp.difference.max.ms message.timestamp.type min.cleanable.dirty.ratio min.compaction.lag.ms min.insync.replicas preallocate retention.bytes retention.ms segment.bytes segment.index.bytes segment.jitter.ms segment.ms unclean.leader.election.enable For entity-type ''brokers'': log.message.timestamp.type ssl.client.auth log.retention.ms sasl.login.refresh.window.jitter sasl.kerberos.ticket.renew.window. factor log.preallocate log.index.size.max.bytes sasl.login.refresh.window.factor ssl.truststore.type ssl.keymanager.algorithm log.cleaner.io.buffer.load.factor sasl.login.refresh.min.period.seconds ssl.key.password background.threads log.retention.bytes ssl.trustmanager.algorithm log.segment.bytes max.connections.per.ip.overrides log.cleaner.delete.retention.ms log.segment.delete.delay.ms min.insync.replicas ssl.keystore.location ssl.cipher.suites log.roll.jitter.ms log.cleaner.backoff.ms sasl.jaas.config principal.builder.class log.flush.interval.ms confluent.tier.enable log.cleaner.max.compaction.lag.ms max.connections log.cleaner.dedupe.buffer.size log.flush.interval.messages advertised.listeners num.io.threads listener.security.protocol.map log.message.downconversion.enable sasl.enabled.mechanisms sasl.login.refresh.buffer.seconds ssl.truststore.password listeners metric.reporters ssl.protocol sasl.kerberos.ticket.renew.jitter ssl.keystore.password sasl.mechanism.inter.broker.protocol log.cleanup.policy sasl.kerberos.principal.to.local.rules sasl.kerberos.min.time.before.relogin num.recovery.threads.per.data.dir log.cleaner.io.max.bytes.per.second log.roll.ms confluent.tier.local.hotset.ms ssl.endpoint.identification.algorithm unclean.leader.election.enable message.max.bytes log.cleaner.threads log.cleaner.io.buffer.size max.connections.per.ip sasl.kerberos.service.name ssl.provider follower.replication.throttled.rate log.index.interval.bytes log.cleaner.min.compaction.lag.ms log.message.timestamp.difference.max. ms ssl.enabled.protocols confluent.tier.local.hotset.bytes log.cleaner.min.cleanable.ratio replica.alter.log.dirs.io.max.bytes. per.second ssl.keystore.type ssl.secure.random.implementation ssl.truststore.location sasl.kerberos.kinit.cmd leader.replication.throttled.rate num.network.threads compression.type num.replica.fetchers For entity-type ''users'': request_percentage producer_byte_rate SCRAM-SHA-256 SCRAM-SHA-512 consumer_byte_rate For entity-type ''clients'': request_percentage producer_byte_rate consumer_byte_rate Entity types ''users'' and ''clients'' may be specified together to update config for clients of a specific user.')
 _kafka_configs_args+=('--alter: Alter the configuration for the entity.')
 _kafka_configs_args+=('--bootstrap-server: The Kafka server to connect to. This is required for describing and altering broker configs.')
 _kafka_configs_args+=('--command-config: Property file containing configs to be passed to Admin Client. This is used only with --bootstrap-server option for describing and altering broker configs.')
@@ -104,6 +108,7 @@ _kafka_configs_args+=('--entity-name: Name of entity (topic name/client id/user 
 _kafka_configs_args+=('--entity-type: Type of entity (topics/clients/users/brokers)')
 _kafka_configs_args+=('--force: Suppress console prompts')
 _kafka_configs_args+=('--help: Print usage information.')
+_kafka_configs_args+=('--version: Display Kafka version.')
 _kafka_configs_args+=('--zookeeper: REQUIRED: The connection string for the zookeeper connection in the form host:port. Multiple URLS can be given to allow fail-over.')
 compdef "_kafka-command kafka-configs" kafka-configs
 declare -a _kafka_console_consumer_args
@@ -126,6 +131,7 @@ _kafka_console_consumer_args+=('--skip-message-on-error: If there is an error wh
 _kafka_console_consumer_args+=('--timeout-ms: If specified, exit if no message is available for consumption for the specified interval.')
 _kafka_console_consumer_args+=('--topic: The topic id to consume on.')
 _kafka_console_consumer_args+=('--value-deserializer:')
+_kafka_console_consumer_args+=('--version: Display Kafka version.')
 _kafka_console_consumer_args+=('--whitelist: Regular expression specifying whitelist of topics to include for consumption.')
 compdef "_kafka-command kafka-console-consumer" kafka-console-consumer
 declare -a _kafka_console_producer_args
@@ -150,9 +156,11 @@ _kafka_console_producer_args+=('--socket-buffer-size: The size of the tcp RECV s
 _kafka_console_producer_args+=('--sync: If set message send requests to the brokers are synchronously, one at a time as they arrive.')
 _kafka_console_producer_args+=('--timeout: If set and the producer is running in asynchronous mode, this gives the maximum amount of time a message will queue awaiting sufficient batch size. The value is given in ms. (default: 1000)')
 _kafka_console_producer_args+=('--topic: REQUIRED: The topic id to produce messages to.')
+_kafka_console_producer_args+=('--version: Display Kafka version.')
 compdef "_kafka-command kafka-console-producer" kafka-console-producer
 declare -a _kafka_consumer_groups_args
 _kafka_consumer_groups_args=()
+_kafka_consumer_groups_args+=('--all-groups: Apply to all consumer groups.')
 _kafka_consumer_groups_args+=('--all-topics: Consider all topics assigned to a group in the `reset-offsets` process.')
 _kafka_consumer_groups_args+=('--bootstrap-server: REQUIRED: The server(s) to connect to.')
 _kafka_consumer_groups_args+=('--by-duration: Reset offsets to offset by duration from current timestamp. Format: ''PnDTnHnMnS''')
@@ -179,6 +187,7 @@ _kafka_consumer_groups_args+=('--to-latest: Reset offsets to latest offset.')
 _kafka_consumer_groups_args+=('--to-offset: Reset offsets to a specific offset.')
 _kafka_consumer_groups_args+=('--topic: The topic whose consumer group information should be deleted or topic whose should be included in the reset offset process. In `reset- offsets` case, partitions can be specified using this format: `topic1: 0,1,2`, where 0,1,2 are the partition to be included in the process. Reset-offsets also supports multiple topic inputs.')
 _kafka_consumer_groups_args+=('--verbose: Provide additional information, if any, when describing the group. This option may be used with ''-- offsets''/''--members''/''--state'' and ''--bootstrap-server'' options only. Example: --bootstrap-server localhost: 9092 --describe --group group1 -- members --verbose')
+_kafka_consumer_groups_args+=('--version: Display Kafka version.')
 compdef "_kafka-command kafka-consumer-groups" kafka-consumer-groups
 declare -a _kafka_consumer_perf_test_args
 _kafka_consumer_perf_test_args=()
@@ -187,7 +196,7 @@ _kafka_consumer_perf_test_args+=('--consumer.config: Consumer config properties 
 _kafka_consumer_perf_test_args+=('--date-format: The date format to use for formatting the time field. See java.text. SimpleDateFormat for options. (default: yyyy-MM-dd HH:mm:ss:SSS)')
 _kafka_consumer_perf_test_args+=('--fetch-size: The amount of data to fetch in a single request. (default: 1048576)')
 _kafka_consumer_perf_test_args+=('--from-latest: If the consumer does not already have an established offset to consume from, start with the latest message present in the log rather than the earliest message.')
-_kafka_consumer_perf_test_args+=('--group: The group id to consume on. (default: perf-consumer-88842)')
+_kafka_consumer_perf_test_args+=('--group: The group id to consume on. (default: perf-consumer-39934)')
 _kafka_consumer_perf_test_args+=('--help: Print usage information.')
 _kafka_consumer_perf_test_args+=('--hide-header: If set, skips printing the header for the stats')
 _kafka_consumer_perf_test_args+=('--messages: REQUIRED: The number of messages to send or consume')
@@ -199,6 +208,7 @@ _kafka_consumer_perf_test_args+=('--socket-buffer-size: The size of the tcp RECV
 _kafka_consumer_perf_test_args+=('--threads: Number of processing threads. (default: 10)')
 _kafka_consumer_perf_test_args+=('--timeout: The maximum allowed time in milliseconds between returned records. (default: 10000)')
 _kafka_consumer_perf_test_args+=('--topic: REQUIRED: The topic to consume from.')
+_kafka_consumer_perf_test_args+=('--version: Display Kafka version.')
 compdef "_kafka-command kafka-consumer-perf-test" kafka-consumer-perf-test
 declare -a _kafka_delegation_tokens_args
 _kafka_delegation_tokens_args=()
@@ -215,13 +225,15 @@ _kafka_delegation_tokens_args+=('--owner-principal: owner is a kafka principal. 
 _kafka_delegation_tokens_args+=('--renew: Renew delegation token. Use --renew-time-period option to set renew time period.')
 _kafka_delegation_tokens_args+=('--renew-time-period: Renew time period in milliseconds. If the value is -1, then the renew time period will default to a server side config value (delegation. token.expiry.time.ms).')
 _kafka_delegation_tokens_args+=('--renewer-principal: renewer is a kafka principal. It is should be in principalType:name format.')
+_kafka_delegation_tokens_args+=('--version: Display Kafka version.')
 compdef "_kafka-command kafka-delegation-tokens" kafka-delegation-tokens
 declare -a _kafka_topics_args
 _kafka_topics_args=()
 _kafka_topics_args+=('--alter: Alter the number of partitions, replica assignment, and/or configuration for the topic.')
+_kafka_topics_args+=('--at-min-isr-partitions: if set when describing topics, only show partitions whose isr count is equal to the configured minimum. Not supported with the --zookeeper option.')
 _kafka_topics_args+=('--bootstrap-server: REQUIRED: The Kafka server to connect to. In case of providing this, a direct Zookeeper connection won''t be required.')
 _kafka_topics_args+=('--command-config: Property file containing configs to be passed to Admin Client. This is used only with --bootstrap-server option for describing and altering broker configs.')
-_kafka_topics_args+=('--config: A topic configuration override for the topic being created or altered.The following is a list of valid configurations: cleanup.policy compression.type delete.retention.ms file.delete.delay.ms flush.messages flush.ms follower.replication.throttled. replicas index.interval.bytes leader.replication.throttled.replicas max.message.bytes message.downconversion.enable message.format.version message.timestamp.difference.max.ms message.timestamp.type min.cleanable.dirty.ratio min.compaction.lag.ms min.insync.replicas preallocate retention.bytes retention.ms segment.bytes segment.index.bytes segment.jitter.ms segment.ms unclean.leader.election.enable See the Kafka documentation for full details on the topic configs.It is supported only in combination with -- create if --bootstrap-server option is used.')
+_kafka_topics_args+=('--config: A topic configuration override for the topic being created or altered.The following is a list of valid configurations: cleanup.policy compression.type confluent.tier.enable confluent.tier.local.hotset.bytes confluent.tier.local.hotset.ms delete.retention.ms file.delete.delay.ms flush.messages flush.ms follower.replication.throttled. replicas index.interval.bytes leader.replication.throttled.replicas max.compaction.lag.ms max.message.bytes message.downconversion.enable message.format.version message.timestamp.difference.max.ms message.timestamp.type min.cleanable.dirty.ratio min.compaction.lag.ms min.insync.replicas preallocate retention.bytes retention.ms segment.bytes segment.index.bytes segment.jitter.ms segment.ms unclean.leader.election.enable See the Kafka documentation for full details on the topic configs.It is supported only in combination with -- create if --bootstrap-server option is used.')
 _kafka_topics_args+=('--create: Create a new topic.')
 _kafka_topics_args+=('--delete: Delete a topic')
 _kafka_topics_args+=('--delete-config: A topic configuration override to be removed for an existing topic (see the list of configurations under the --config option). Not supported with the --bootstrap-server option.')
@@ -239,7 +251,9 @@ _kafka_topics_args+=('--replication-factor: The replication factor for each part
 _kafka_topics_args+=('--topic: The topic to create, alter, describe or delete. It also accepts a regular expression, except for --create option. Put topic name in double quotes and use the ''\'' prefix to escape regular expression symbols; e. g. "test\.topic".')
 _kafka_topics_args+=('--topics-with-overrides: if set when describing topics, only show topics that have overridden configs')
 _kafka_topics_args+=('--unavailable-partitions: if set when describing topics, only show partitions whose leader is not available')
+_kafka_topics_args+=('--under-min-isr-partitions: if set when describing topics, only show partitions whose isr count is less than the configured minimum. Not supported with the --zookeeper option.')
 _kafka_topics_args+=('--under-replicated-partitions: if set when describing topics, only show under replicated partitions')
+_kafka_topics_args+=('--version: Display Kafka version.')
 _kafka_topics_args+=('--zookeeper: DEPRECATED, The connection string for the zookeeper connection in the form host:port. Multiple hosts can be given to allow fail-over.')
 compdef "_kafka-command kafka-topics" kafka-topics
 declare -a _kafka_producer_perf_test_args
@@ -258,6 +272,7 @@ _kafka_dump_log_args+=('--print-data-log: if set, printing the messages content 
 _kafka_dump_log_args+=('--transaction-log-decoder: if set, log data will be parsed as transaction metadata from the __transaction_state topic.')
 _kafka_dump_log_args+=('--value-decoder-class: if set, used to deserialize the messages. This class should implement kafka. serializer.Decoder trait. Custom jar should be available in kafka/libs directory. (default: kafka.serializer. StringDecoder)')
 _kafka_dump_log_args+=('--verify-index-only: if set, just verify the index log without printing its content.')
+_kafka_dump_log_args+=('--version: Display Kafka version.')
 compdef "_kafka-command kafka-dump-log" kafka-dump-log
 declare -a _kafka_log_dirs_args
 _kafka_log_dirs_args=()
@@ -267,6 +282,7 @@ _kafka_log_dirs_args+=('--command-config: Property file containing configs to be
 _kafka_log_dirs_args+=('--describe: Describe the specified log directories on the specified brokers.')
 _kafka_log_dirs_args+=('--help: Print usage information.')
 _kafka_log_dirs_args+=('--topic-list: The list of topics to be queried in the form "topic1,topic2,topic3". All topics will be queried if no topic list is specified (default: )')
+_kafka_log_dirs_args+=('--version: Display Kafka version.')
 compdef "_kafka-command kafka-log-dirs" kafka-log-dirs
 declare -a _kafka_verifiable_consumer_args
 _kafka_verifiable_consumer_args=()
@@ -290,7 +306,8 @@ _kafka_streams_application_reset_args+=('--to-datetime: Reset offsets to offset 
 _kafka_streams_application_reset_args+=('--to-earliest: Reset offsets to earliest offset.')
 _kafka_streams_application_reset_args+=('--to-latest: Reset offsets to latest offset.')
 _kafka_streams_application_reset_args+=('--to-offset: Reset offsets to a specific offset.')
-_kafka_streams_application_reset_args+=('--zookeeper: Zookeeper option is deprecated by bootstrap.servers, as the reset tool would no longer access Zookeeper directly. onsException: Missing required option(s) [application-id] ption: Missing required option(s) [application-id] uiredOptions(OptionParser.java:426) ionParser.java:400) Arguments(StreamsResetter.java:247) treamsResetter.java:140) treamsResetter.java:130) StreamsResetter.java:669)')
+_kafka_streams_application_reset_args+=('--version: Print version information and exit.')
+_kafka_streams_application_reset_args+=('--zookeeper: Zookeeper option is deprecated by bootstrap.servers, as the reset tool would no longer access Zookeeper directly.')
 compdef "_kafka-command kafka-streams-application-reset" kafka-streams-application-reset
 declare -a _kafka_mirror_maker_args
 _kafka_mirror_maker_args=()
@@ -305,6 +322,7 @@ _kafka_mirror_maker_args+=('--num.streams: Number of consumption streams. (defau
 _kafka_mirror_maker_args+=('--offset.commit.interval.ms: Offset commit interval in ms. (default: 60000)')
 _kafka_mirror_maker_args+=('--producer.config: Embedded producer config.')
 _kafka_mirror_maker_args+=('--rebalance.listener.args: Arguments used by custom rebalance listener for mirror maker consumer.')
+_kafka_mirror_maker_args+=('--version: Display Kafka version.')
 _kafka_mirror_maker_args+=('--whitelist: Whitelist of topics to mirror.')
 compdef "_kafka-command kafka-mirror-maker" kafka-mirror-maker
 declare -a _kafka_delete_records_args
@@ -313,6 +331,7 @@ _kafka_delete_records_args+=('--bootstrap-server: REQUIRED: The server to connec
 _kafka_delete_records_args+=('--command-config: A property file containing configs to be passed to Admin Client.')
 _kafka_delete_records_args+=('--help: Print usage information.')
 _kafka_delete_records_args+=('--offset-json-file: REQUIRED: The JSON file with offset per partition. The format to use is: {"partitions": [{"topic": "foo", "partition": 1, "offset": 1}], "version":1 }')
+_kafka_delete_records_args+=('--version: Display Kafka version.')
 compdef "_kafka-command kafka-delete-records" kafka-delete-records
 declare -a _replicator_args
 _replicator_args=()

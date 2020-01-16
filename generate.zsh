@@ -7,7 +7,7 @@ COMMANDS=("kafka-acls" "kafka-avro-console-consumer" "kafka-avro-console-produce
 "kafka-delegation-tokens" "kafka-topics" "kafka-producer-perf-test"
 "kafka-dump-log" "kafka-log-dirs" "kafka-verifiable-consumer"
 "kafka-verifiable-producer" "kafka-streams-application-reset"
-"kafka-mirror-maker" "kafka-delete-records" "replicator"
+"kafka-mirror-maker" "kafka-delete-records" "replicator" "kafka-reassign-partitions"
 )
 
 function kafka_retrieve_help_command() {

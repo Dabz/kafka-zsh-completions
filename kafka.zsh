@@ -7,10 +7,10 @@
 #
 
 function _kafka-command() {
-	cmd=$1
-	arg_name="_$(echo $cmd | tr - _)_args"
-	typeset -a options
-	eval _describe 'values' $arg_name
+  cmd=$1
+  arg_name="_$(echo $cmd | tr - _)_args"
+  typeset -a options
+  eval _describe 'values' $arg_name
 }
 
 declare -a _kafka_acls_args
@@ -198,7 +198,7 @@ _kafka_consumer_perf_test_args+=('--consumer.config: Consumer config properties 
 _kafka_consumer_perf_test_args+=('--date-format: The date format to use for formatting the time field. See java.text. SimpleDateFormat for options. (default: yyyy-MM-dd HH:mm:ss:SSS)')
 _kafka_consumer_perf_test_args+=('--fetch-size: The amount of data to fetch in a single request. (default: 1048576)')
 _kafka_consumer_perf_test_args+=('--from-latest: If the consumer does not already have an established offset to consume from, start with the latest message present in the log rather than the earliest message.')
-_kafka_consumer_perf_test_args+=('--group: The group id to consume on. (default: perf-consumer-77993)')
+_kafka_consumer_perf_test_args+=('--group: The group id to consume on. (default: perf-consumer-86233)')
 _kafka_consumer_perf_test_args+=('--help: Print usage information.')
 _kafka_consumer_perf_test_args+=('--hide-header: If set, skips printing the header for the stats')
 _kafka_consumer_perf_test_args+=('--messages: REQUIRED: The number of messages to send or consume')
@@ -261,6 +261,17 @@ _kafka_topics_args+=('--zookeeper: DEPRECATED, The connection string for the zoo
 compdef "_kafka-command kafka-topics" kafka-topics
 declare -a _kafka_producer_perf_test_args
 _kafka_producer_perf_test_args=()
+_kafka_producer_perf_test_args+=('--topic: --topic TOPIC produce messages to this topic')
+_kafka_producer_perf_test_args+=('--num-records: --num-records NUM-RECORDS number of messages to produce')
+_kafka_producer_perf_test_args+=('--payload-delimiter: --payload-delimiter PAYLOAD-DELIMITER provides delimiter to be used when --payload-file is provided. Defaults to new line. Note that this parameter will be ignored if --payload-file is not provided. (default: )')
+_kafka_producer_perf_test_args+=('--throughput: --throughput THROUGHPUT throttle maximum message throughput to *approximately* THROUGHPUT messages/sec. Set this to -1 to disable throttling.')
+_kafka_producer_perf_test_args+=('--producer-props: --producer-props PROP-NAME=PROP-VALUE [PROP-NAME=PROP-VALUE ...] kafka producer related configuration properties like bootstrap.servers,client.id etc. These configs take precedence over those passed via --producer.config.')
+_kafka_producer_perf_test_args+=('--producer.config: --producer.config CONFIG-FILE producer config properties file.')
+_kafka_producer_perf_test_args+=('--print-metrics: --print-metrics print out metrics at the end of the test. (default: false)')
+_kafka_producer_perf_test_args+=('--transactional-id: --transactional-id TRANSACTIONAL-ID The transactionalId to use if transaction-duration-ms is > 0. Useful when testing the performance of concurrent transactions. (default: performance-producer-default- transactional-id)')
+_kafka_producer_perf_test_args+=('--transaction-duration-ms: --transaction-duration-ms TRANSACTION-DURATION The max age of each transaction. The commitTransaction will be called after this time has elapsed. Transactions are only enabled if this value is positive. (default: 0) either --record-size or --payload-file must be specified but not both.')
+_kafka_producer_perf_test_args+=('--record-size: --record-size RECORD-SIZE message size in bytes. Note that you must provide exactly one of --record-size or --payload-file.')
+_kafka_producer_perf_test_args+=('--payload-file: --payload-file PAYLOAD-FILE file to read the message payloads from. This works only for UTF-8 encoded text files. Payloads will be read from this file and a payload will be randomly selected when sending messages. Note that you must provide exactly one of --record-size or --payload-file.')
 compdef "_kafka-command kafka-producer-perf-test" kafka-producer-perf-test
 declare -a _kafka_dump_log_args
 _kafka_dump_log_args=()
@@ -289,9 +300,29 @@ _kafka_log_dirs_args+=('--version: Display Kafka version.')
 compdef "_kafka-command kafka-log-dirs" kafka-log-dirs
 declare -a _kafka_verifiable_consumer_args
 _kafka_verifiable_consumer_args=()
+_kafka_verifiable_consumer_args+=('--broker-list: --broker-list HOST1:PORT1[,HOST2:PORT2[...]] Comma-separated list of Kafka brokers in the form HOST1:PORT1,HOST2:PORT2,...')
+_kafka_verifiable_consumer_args+=('--topic: --topic TOPIC Consumes messages from this topic.')
+_kafka_verifiable_consumer_args+=('--group-id: --group-id GROUP_ID The groupId shared among members of the consumer group')
+_kafka_verifiable_consumer_args+=('--group-instance-id: --group-instance-id GROUP_INSTANCE_ID A unique identifier of the consumer instance')
+_kafka_verifiable_consumer_args+=('--max-messages: --max-messages MAX-MESSAGES Consume this many messages. If -1 (the default), the consumer will consume until the process is killed externally (default: -1)')
+_kafka_verifiable_consumer_args+=('--session-timeout: --session-timeout TIMEOUT_MS Set the consumer''s session timeout (default: 30000)')
+_kafka_verifiable_consumer_args+=('--verbose: --verbose Enable to log individual consumed records (default: false)')
+_kafka_verifiable_consumer_args+=('--enable-autocommit: --enable-autocommit Enable offset auto-commit on consumer (default: false)')
+_kafka_verifiable_consumer_args+=('--reset-policy: --reset-policy RESETPOLICY Set reset policy (must be either ''earliest'', ''latest'', or ''none'' (default: earliest)')
+_kafka_verifiable_consumer_args+=('--assignment-strategy: --assignment-strategy ASSIGNMENTSTRATEGY Set assignment strategy (e.g. org.apache.kafka.clients.consumer.RoundRobinAssignor) (default: org.apache.kafka.clients.consumer.RangeAssignor)')
+_kafka_verifiable_consumer_args+=('--consumer.config: --consumer.config CONFIG_FILE Consumer config properties file (config options shared with command line parameters will be overridden).')
 compdef "_kafka-command kafka-verifiable-consumer" kafka-verifiable-consumer
 declare -a _kafka_verifiable_producer_args
 _kafka_verifiable_producer_args=()
+_kafka_verifiable_producer_args+=('--topic: --topic TOPIC Produce messages to this topic.')
+_kafka_verifiable_producer_args+=('--broker-list: --broker-list HOST1:PORT1[,HOST2:PORT2[...]] Comma-separated list of Kafka brokers in the form HOST1:PORT1,HOST2:PORT2,...')
+_kafka_verifiable_producer_args+=('--max-messages: --max-messages MAX-MESSAGES Produce this many messages. If -1, produce messages until the process is killed externally. (default: -1)')
+_kafka_verifiable_producer_args+=('--throughput: --throughput THROUGHPUT If set >= 0, throttle maximum message throughput to *approximately* THROUGHPUT messages/sec. (default: -1)')
+_kafka_verifiable_producer_args+=('--acks: --acks ACKS Acks required on each produced message. See Kafka docs on acks for details. (default: -1)')
+_kafka_verifiable_producer_args+=('--producer.config: --producer.config CONFIG_FILE Producer config properties file.')
+_kafka_verifiable_producer_args+=('--message-create-time: --message-create-time CREATETIME Send messages with creation time starting at the arguments value, in milliseconds since epoch (default: -1)')
+_kafka_verifiable_producer_args+=('--value-prefix: --value-prefix VALUE-PREFIX If specified, each produced value will have this prefix with a dot separator')
+_kafka_verifiable_producer_args+=('--repeating-keys: --repeating-keys REPEATING-KEYS If specified, each produced record will have a key starting at 0 increment by 1 up to the number specified (exclusive), then the key is set to 0 again')
 compdef "_kafka-command kafka-verifiable-producer" kafka-verifiable-producer
 declare -a _kafka_streams_application_reset_args
 _kafka_streams_application_reset_args=()
@@ -338,6 +369,27 @@ _kafka_delete_records_args+=('--version: Display Kafka version.')
 compdef "_kafka-command kafka-delete-records" kafka-delete-records
 declare -a _replicator_args
 _replicator_args=()
+_replicator_args+=('--cluster.id: --cluster.id <Replicator Cluster Id> [--cluster.threads <Total Replicator threads>] [--confluent.license <Confluent License Key>]')
+_replicator_args+=('--consumer.config: --consumer.config <consumer.properties> [--consumer.monitoring.config <consumer-monitoring.properties>] [(-h | --help)] --producer.config <producer.properties> [--producer.monitoring.config <producer-monitoring.properties>] [--replication.config <replication.properties>] [--topic.auto.create <Auto-create Topics on Destination>] [--topic.config.sync <Sync Topic Configs>] [--topic.config.sync.interval.ms <Topic Config Sync Interval (ms)>] [--topic.create.backoff.ms <Topic Creation Backoff (ms)>] [--topic.poll.interval.ms <Topic Config Sync Interval (ms)>] [--topic.preserve.partitions <Auto-create Topics on Destination>] [--topic.regex <Regular Expression to Match Topics for Replication>] [--topic.rename.format <Rename Format>] [--topic.timestamp.type <Topic Timestamp Type>] [--whitelist <Topic Whitelist>] OPTIONS')
+_replicator_args+=('--blacklist: --blacklist <Topic Blacklist> A comma-separated list of topics that should not be replicated, even if they are included in the whitelist or matched by the regular expression.')
+_replicator_args+=('--cluster.id: --cluster.id <Replicator Cluster Id> Specifies the unique identifier for the Replicator cluster.')
+_replicator_args+=('--cluster.threads: --cluster.threads <Total Replicator threads> The total number of threads across all workers in the Replicator cluster. If this command starts another Replicator worker in an existing cluster, this can be used to change the number of threads in the whole cluster.')
+_replicator_args+=('--confluent.license: --confluent.license <Confluent License Key> Your Confluent license key that enables you to use Replicator. Without the license key, you can use Replicator for a 30-day trial period. If you are a subscriber, please contact Confluent Support for more information.')
+_replicator_args+=('--consumer.config: --consumer.config <consumer.properties> Specifies the location of the file that contains the configuration settings for the consumer reading from the origin cluster.')
+_replicator_args+=('--consumer.monitoring.config: --consumer.monitoring.config <consumer-monitoring.properties> Specifies the location of the file that contains the producer settings for the Kafka cluster where monitoring information about the Replicator consumer is to be sent. This must be specified if monitoring is to be enabled, but may point to a different Kafka cluster than the origin or destination clusters. Use the same file as `--producer-config` to write metrics to the destination cluster. -h, --help Display help information')
+_replicator_args+=('--producer.config: --producer.config <producer.properties> Specifies the location of the file that contains the configuration settings for the producer writing to the destination cluster.')
+_replicator_args+=('--producer.monitoring.config: --producer.monitoring.config <producer-monitoring.properties> Specifies the location of the file that contains the producer settings for the Kafka cluster where monitoring information about the Replicator producer is to be sent. This must be specified if monitoring is to be enabled, but may point to a different Kafka cluster than the origin or destination clusters. Use the same file as --producer-config to write metrics to the destination cluster.')
+_replicator_args+=('--replication.config: --replication.config <replication.properties> Specifies the location of the file that contains the configuration settings for replication. When used, any property in this file can be overridden via a command line parameter. When this is not supplied, all of the properties defining how topics are to be replicated should be specified on the command line.')
+_replicator_args+=('--topic.auto.create: --topic.auto.create <Auto-create Topics on Destination> Whether to automatically create topics in the destination cluster if required.')
+_replicator_args+=('--topic.config.sync: --topic.config.sync <Sync Topic Configs> Whether to periodically sync topic configuration to the destination cluster.')
+_replicator_args+=('--topic.config.sync.interval.ms: --topic.config.sync.interval.ms <Topic Config Sync Interval (ms)> How often to check for configuration changes when ''topic.config.sync'' is enabled.')
+_replicator_args+=('--topic.create.backoff.ms: --topic.create.backoff.ms <Topic Creation Backoff (ms)> Time to wait before retrying auto topic creation or expansion.')
+_replicator_args+=('--topic.poll.interval.ms: --topic.poll.interval.ms <Topic Config Sync Interval (ms)> Specifies how frequently to poll the source cluster for new topics matching the whitelist or regular expression. Can also be read from the file given by --replication.config.')
+_replicator_args+=('--topic.preserve.partitions: --topic.preserve.partitions <Auto-create Topics on Destination> Whether to automatically increase the number of partitions in the destination cluster to match the source cluster and ensure that messages replicated from the source cluster use the same partition in the destination cluster.')
+_replicator_args+=('--topic.regex: --topic.regex <Regular Expression to Match Topics for Replication> A regular expression that matches the names of the topics to be replicated. Any topic that matches this expression (or is listed in the whitelist) and not in the blacklist will be replicated.')
+_replicator_args+=('--topic.rename.format: --topic.rename.format <Rename Format> A format string for the topic name in the destination cluster, which may contain ${topic} as a placeholder for the originating topic name. For example, ${topic}_dc1 for the topic ''orders'' will map to the destination topic name ''orders_dc1.'' Can be placed inside the file specified by --replication.config.')
+_replicator_args+=('--topic.timestamp.type: --topic.timestamp.type <Topic Timestamp Type> The timestamp type for the topics in the destination cluster.')
+_replicator_args+=('--whitelist: --whitelist <Topic Whitelist> A comma-separated list of the names of topics that should be replicated. Any topic that is in this list and not in the blacklist will be replicated.')
 compdef "_kafka-command replicator" replicator
 declare -a _kafka_reassign_partitions_args
 _kafka_reassign_partitions_args=()

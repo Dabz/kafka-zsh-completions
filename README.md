@@ -3,7 +3,14 @@ This projects aims at developing Kafka completion scripts. The scripts may be co
 
 ## Usage
 
-To start using the Kafka autocompletion just download the repository locally and `source kafka.plugin.zsh` 
+To start using the Kafka autocompletion just download the repository locally and `source kafka-zsh-completions.plugin.zsh` 
+
+For [Oh-My-Zsh](https://github.com/ohmyzsh/ohmyzsh) users execute:
+```
+cd $ZSH_CUSTOM/plugins
+git clone git@github.com:Dabz/kafka-zsh-completions.git
+```
+and add `kafka-zsh-completions` to plugins section in your `.zshrc` file, like `plugins=(z git tmux kafka-zsh-completions)`
 
 ## Supported completion
 
@@ -32,7 +39,7 @@ To start using the Kafka autocompletion just download the repository locally and
 
 - The source of information used for the completion is gathered from the usage of the CLI tool. 
 - This script relies on Apache Kafka Confluent distribution (either Open Source or Enterprise)
-- To avoid reloading and parsing all the information and each shell, a first script `kafka.plugin.zsh.generator` is actually gathering all the information on the local machine and generating the `kafka.plugin.zsh` auto-completion file with hardcoded information. 
+- To avoid reloading and parsing all the information and each shell, a first script `kafka.plugin.zsh.generator` is actually gathering all the information on the local machine and generating the `kafka-zsh-completions.plugin.zsh` auto-completion file with hardcoded information. 
 
 ## Examples
 

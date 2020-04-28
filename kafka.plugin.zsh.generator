@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-OUT=kafka.plugin.zsh
+OUT=kafka-zsh-completions.plugin.zsh
 COMMANDS=("kafka-acls" "kafka-avro-console-consumer" "kafka-avro-console-producer"
   "kafka-broker-api-versions" "kafka-configs" "kafka-console-consumer" 
   "kafka-console-producer" "kafka-consumer-groups" "kafka-consumer-perf-test" 

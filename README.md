@@ -12,6 +12,12 @@ git clone git@github.com:Dabz/kafka-zsh-completions.git
 ```
 and add `kafka-zsh-completions` to plugins section in your `.zshrc` file, like `plugins=(z git tmux kafka-zsh-completions)`
 
+Small one-liner for Linux users to copy Kafka executable files `*.sh` with supported names:
+```
+cd $KAFKA_HOME/bin
+for file in *.sh; do cp $file $(echo $file | cut -d. -f1); done;
+```
+
 ## Supported completion
 
 - kafka-topics

@@ -76,6 +76,7 @@ function kafka_retrieve_help_command() {
 function kafka-command() {
 cmd=$1
 echo "compdef \"_kafka-command $cmd\" $cmd" >> $OUT
+echo "compdef \"_kafka-command $cmd\" ${cmd}.sh" >> $OUT
 }
 
 cat << EOF > $OUT

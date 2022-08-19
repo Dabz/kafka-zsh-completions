@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 OUT=kafka.plugin.zsh
+#COMMANDS=("kafka-topics" "kafka-console-consumer" "kafka-console-producer")
 COMMANDS=("kafka-acls" "kafka-avro-console-consumer" "kafka-avro-console-producer"
   "kafka-broker-api-versions" "kafka-configs" "kafka-console-consumer" 
   "kafka-console-producer" "kafka-consumer-groups" "kafka-consumer-perf-test" 
@@ -9,6 +10,30 @@ COMMANDS=("kafka-acls" "kafka-avro-console-consumer" "kafka-avro-console-produce
   "kafka-verifiable-producer" "kafka-streams-application-reset"
   "kafka-mirror-maker" "kafka-delete-records" "replicator" "kafka-reassign-partitions"
 )
+
+function type_from_option() {
+  option=$1
+  if [[ "$option" =~ ".*String.*" ]]; then
+    if [[ "$option" =~ ".*topic.*" ]]; then
+      echo ":topic:_kafka-list-topic"
+    elif [[ "$option" =~ ".*file.*" ]]; then
+      echo ":file:_files"
+    else
+      echo ":file:_files"
+    fi
+  elif [[ "$option" =~ ".*Integer.*" ]]; then
+    echo ":file:_files"
+  elif [[ "$option" =~ ".*Long.*" ]]; then
+    echo ":file:_files"
+  else
+    echo ""
+  fi
+}
+
+function escape_bracket() {
+  def=$1
+  echo $def | sed 's/\[/\\[/g' | sed 's/\]/\\]/g'
+}
 
 function kafka_retrieve_help_command() {
   cmd=$1
@@ -53,10 +78,13 @@ function kafka_retrieve_help_command() {
     fi
     if [[ $first_part_line =~ "^[ \s\t]*--[a-z][a-z\-\.]+" ]]; then
       if [ ! -z $option ]; then
-        echo "$arg_name+=('$option:${desc//\'/''}')" >> $OUT
+        ctype=`type_from_option $option_full`
+        desc=`escape_bracket $desc`
+        echo "$arg_name+=('${option}[${desc//\'/''}]${ctype}')" >> $OUT
       fi	
 
       option=`echo $first_part_line | sed -E 's/^\s*(--[a-z\.\\\-]+).*$/\1/'`
+      option_full=$first_part_line
       desc=""
     fi
     IFS=" "
@@ -69,13 +97,15 @@ function kafka_retrieve_help_command() {
   unset IFS
 
   if [ ! -z $option ]; then
-    echo "$arg_name+=('$option:${desc//\'/''}')" >> $OUT
+    ctype=`type_from_option $option_full`
+    desc=`escape_bracket $desc`
+    echo "$arg_name+=('${option}[${desc//\'/''}]${ctype}')" >> $OUT
   fi	
 }
 
 function kafka-command() {
-cmd=$1
-echo "compdef \"_kafka-command $cmd\" $cmd" >> $OUT
+  cmd=$1
+  echo "compdef \"_kafka-command $cmd\" $cmd" >> $OUT
 }
 
 cat << EOF > $OUT
@@ -91,7 +121,11 @@ function _kafka-command() {
   cmd=\$1
   arg_name="_\$(echo \$cmd | tr - _)_args"
   typeset -a options
-  eval _describe 'values' \$arg_name
+  eval _arguments \\\$\$arg_name
+}
+
+function _kafka-list-topic() {
+  compadd \`kcat -L  -J | jq '.topics[].topic' -r\`
 }
 
 EOF
